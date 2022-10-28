@@ -3,8 +3,8 @@ package com.example.SpringBoot;
 import java.util.regex.Pattern;
 
 public class Version implements Comparable<Version> {
-    static final String VersionNull = "'version' cannot be null";
-    static final String VersionMatchPattern =  "'version' : 'major.minor.patch(-SNAPSHOT)'";
+    static final String VersionNull = "The 'version' is null.";
+    static final String VersionMatchPattern =  "The 'version' format is 'major.minor.patch(-SNAPSHOT)'.";
     public final int[] numbers;
     public String version;
 

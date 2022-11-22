@@ -1,11 +1,12 @@
 package com.example.SpringBoot;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +29,7 @@ public class VersionTest {
         });
      */
     @Test
-    public void basicTest() {
+    public void BasicTest() {
         String seatClass = "Economy";
 
         ArrayList<String> seatClassList = new ArrayList<>();
@@ -47,7 +48,7 @@ public class VersionTest {
     }
 
     @Test
-    public void compareTest(){
+    public void CompareTest(){
         int number = 100;
 
         assertThat(number).isLessThan(150); // 값보다 작은지 검증
@@ -58,13 +59,13 @@ public class VersionTest {
     }
 
     @Test
-    public void booleanTest(){
+    public void BooleanTest(){
         assertThat(true).isTrue(); // 값이 true인지 검증
         assertThat(false).isFalse(); // 값이 false인지 검증
     }
 
     @Test
-    public void stringTest(){
+    public void StringTest(){
         /*
          * 특정 값을 포함하는지 검사
          */
@@ -93,7 +94,7 @@ public class VersionTest {
     }
 
     @Test
-    public void numberTest(){
+    public void NumberTest(){
         assertThat(0).isZero(); // 0인지 검증
         assertThat(5).isNotZero(); // 0이 아닌지 검증
         assertThat(1).isOne(); // 1인지 검증
@@ -115,7 +116,8 @@ public class VersionTest {
     }
 
     @Test
-    public void collectionTest(){
+    public void CollectionTest(){
+
         ArrayList<Integer> A = new ArrayList<>();
         HashMap<Integer, Integer> B = new HashMap<>();
         for(int i= 1; i<=3; i++){
@@ -134,10 +136,12 @@ public class VersionTest {
         assertThat(B).doesNotContainKey(4); //지정한 키들을 포함하지 않는지 검증
         assertThat(B).containsValues(3); //values를 포함하는지 검증
         assertThat(B).contains(entry(1,1)); //Entry<K,V>를 포함하는지 검증
+
+        assertThat(A).filteredOn(v -> v.equals(1)).containsOnly(1);
     }
 
     @Test
-    public void softTest(){
+    public void SoftTest(){
         //여러검증 한번에 진행
         //Case1
         SoftAssertions soft = new SoftAssertions();
@@ -153,21 +157,21 @@ public class VersionTest {
     }
 
     @Test
-    public void exceptionTest() {
+    public void ExceptionTest() {
         assertThatThrownBy(() -> {
             int number = Integer.valueOf("A"); // Exception이 발생하는 경우를 검증
         }).isInstanceOf(NumberFormatException.class);
     }
 
     @Test
-    public void notExceptionTest() {
+    public void NotExceptionTest() {
         assertThatCode(() -> {
             int number = Integer.valueOf("1"); // Exception이 발생하지 않는 경우를 검증
         }).doesNotThrowAnyException();
     }
 
     @Test
-    public void nullExceptionTest() {
+    public void NullExceptionTest() {
         assertThatThrownBy(() -> {
             Version version = new Version(null); // Null Exception 발생시 에러 메시지
         }).isInstanceOf(IllegalArgumentException.class)
@@ -175,7 +179,7 @@ public class VersionTest {
     }
 
     @Test
-    public void nullExceptionTest2() {
+    public void NullExceptionTest2() {
         assertThatThrownBy(() -> {
             Version version = new Version("1.2.0");
             version.compareTo(null); // Null Exception 발생시 에러 메시지
@@ -185,7 +189,7 @@ public class VersionTest {
     }
 
     @Test
-    public void patternExceptionTest() {
+    public void PatternExceptionTest() {
         assertThatThrownBy(() -> {
             Version version = new Version("1-1-0");
         }).isInstanceOf(IllegalArgumentException.class)
@@ -193,7 +197,7 @@ public class VersionTest {
     }
 
     @Test
-    public void patternExceptionTest2() {
+    public void PatternExceptionTest2() {
         assertThatThrownBy(() -> {
             Version version = new Version("1.1.0.0");
         }).isInstanceOf(IllegalArgumentException.class)
@@ -201,7 +205,7 @@ public class VersionTest {
     }
 
     @Test
-    public void exampleTest4() {
+    public void ExampleTest4() {
         assertThat(new Version("1").isSnapshot()).isFalse();
         assertThat(new Version("1.2").isSnapshot()).isFalse();
         assertThat(new Version("1.2.0").isSnapshot()).isFalse();
@@ -209,7 +213,7 @@ public class VersionTest {
     }
 
     @Test
-    public void exampleTest6() {
+    public void ExampleTest6() {
         assertThat(new Version("1.2.0").compareTo(new Version("1.2.0"))).isZero();
         assertThat(new Version("1.2.0").compareTo(new Version("1.2"))).isZero();
 
@@ -218,5 +222,30 @@ public class VersionTest {
 
         assertThat(new Version("1.2.0").compareTo(new Version("1.1.0"))).isPositive();
         assertThat(new Version("1.2").compareTo(new Version("1.2.0-SNAPSHOT"))).isPositive();
+    }
+
+    @Test(timeout = 1000)
+    public void TimeOutTest() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(100);
+    }
+
+    @BeforeClass
+    public void BeforeClassTest() {
+        System.out.println("@BeforeClass");
+    }
+
+    @AfterClass
+    public void AfterClassTest() {
+        System.out.println("@AfterClass");
+    }
+
+    @Before
+    public void BeforeTest() {
+        System.out.println("@Before");
+    }
+
+    @After
+    public void AfterTest() {
+        System.out.println("@After");
     }
 }

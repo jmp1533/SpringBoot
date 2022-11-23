@@ -26,7 +26,30 @@ public class ApiController {
     @PostMapping(value = "/flight", produces = "application/json; charset=UTF8")
     public ResponseEntity Post(@RequestBody FlightRequest flightRequest)
     {
+        String response = RunService(flightRequest);
 
+        return ResponseEntity.ok().headers(headers).body(response);
+    }
+
+    @PutMapping(value = "/flight", produces = "application/json; charset=UTF8")
+    public ResponseEntity Put(@RequestBody FlightRequest flightRequest)
+    {
+        String response = RunService(flightRequest);
+
+        return ResponseEntity.ok().headers(headers).body(response);
+    }
+
+    @DeleteMapping(value = "/flight", produces = "application/json; charset=UTF8")
+    public ResponseEntity Delete(@RequestBody FlightRequest flightRequest)
+    {
+        String response = RunService(flightRequest);
+
+        return ResponseEntity.ok().headers(headers).body(response);
+    }
+
+    @PatchMapping(value = "/flight", produces = "application/json; charset=UTF8")
+    public ResponseEntity Patch(@RequestBody FlightRequest flightRequest)
+    {
         String response = RunService(flightRequest);
 
         return ResponseEntity.ok().headers(headers).body(response);
